@@ -9,8 +9,10 @@ git clone https://github.com/zompaktu/certbot-dns-pddyandex/ && cd ./certbot-dns
 
 #### 2) Set API KEY
 
-Get your PDD Yandex API key from https://pddimp.yandex.ru/api2/admin/get_token
-and add it to ./config.sh
+Get your PDD Yandex API key from https://pddimp.yandex.ru/api2/admin/get_token and add it to ./config.sh
+```bash
+nano ./config.sh
+```
 
 #### 3) Install CertBot
 
