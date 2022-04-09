@@ -27,7 +27,7 @@ fi
 unset DNS_GOOGLE DNS_CLOUDFLARE DNS_OPENDNS
 # Sleep to make sure the change has time to propagate over to DNS (max: 20 min)
 c_time=0
-end_time=1200
+end_time=86400
 while [ "$c_time" -le "$end_time" ]; do
         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @dns1.yandex.net | grep $CERTBOT_VALIDATION` ]; then
                 sleep 5
@@ -51,7 +51,7 @@ while [ "$c_time" -le "$end_time" ]; do
                                 sleep 50
                                 c_time=$[c_time+50]
                         fi
-                        if [ ${DNS_GOOGLE} -eq 1 ] && [ ${DNS_CLOUDFLARE} -eq 1 ] && [ ${DNS_OPENDNS} -eq 1 ]; then
+                        if [ test -n "${DNS_GOOGLE}" ] && [ test -n "${DNS_CLOUDFLARE}" ] && [ test -n "${DNS_OPENDNS}" ]; then
                                 break
                         fi
                 else
