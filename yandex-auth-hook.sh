@@ -1,6 +1,6 @@
 #!/bin/bash
 _dir="$(dirname "$0")"
-source "$_dir/config.sh"
+source "${HOME}/.certbot-dns-pddyandex.rc"
 
 # Get API key for current domain
 API_KEY=${API_KEYMAP["$CERTBOT_DOMAIN"]}
@@ -13,7 +13,7 @@ fi
 CREATE_DOMAIN="_acme-challenge"
 RECORD_ID=$(curl -s -X POST "https://pddimp.yandex.ru/api2/admin/dns/add" \
      -H "PddToken: $API_KEY" \
-     -d "domain=$CERTBOT_DOMAIN&type=TXT&content=$CERTBOT_VALIDATION&ttl=3600&subdomain=$CREATE_DOMAIN" \
+     -d "domain=$CERTBOT_DOMAIN&type=TXT&content=$CERTBOT_VALIDATION&ttl=300&subdomain=$CREATE_DOMAIN" \
       | python -c "import sys,json;print(json.load(sys.stdin)['record']['record_id'])")
 
 # Save info for cleanup
