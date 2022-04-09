@@ -10,7 +10,7 @@ Follow instructions on <https://certbot.eff.org/all-instructions>
 ## 2. Clone this repo
 
 ```bash
-git clone https://github.com/dmitriysafronov/certbot-dns-pddyandex/ ~/.certbot-dns-pddyandex
+git clone https://github.com/dmitriysafronov/certbot-dns-pddyandex/ ~/.certbot-dns-pddyandex && chmod -c +x ~/.certbot-dns-pddyandex/*.sh
 ```
 
 ## 3. Set API KEY
