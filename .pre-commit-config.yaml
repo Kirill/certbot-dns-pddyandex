@@ -1,0 +1,30 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+    - id: check-added-large-files
+    - id: check-case-conflict
+    - id: check-executables-have-shebangs
+    - id: check-json
+    - id: check-shebang-scripts-are-executable
+    - id: check-merge-conflict
+    - id: check-yaml
+      args:
+        - --allow-multiple-documents
+    - id: destroyed-symlinks
+    - id: detect-private-key
+    - id: end-of-file-fixer
+    - id: mixed-line-ending
+    - id: name-tests-test
+    - id: pretty-format-json
+    - id: trailing-whitespace
+- repo: https://github.com/k8s-at-home/sops-pre-commit
+  rev: v2.0.3
+  hooks:
+    - id: forbid-secrets
+- repo: https://github.com/petalmd/dockerfile-pre-commit
+  rev: 'v1.0'
+  hooks:
+    - id: dockerlint
