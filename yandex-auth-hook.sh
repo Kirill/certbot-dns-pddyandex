@@ -14,7 +14,7 @@ CREATE_DOMAIN="_acme-challenge"
 RECORD_ID=$(curl -s -X POST "https://pddimp.yandex.ru/api2/admin/dns/add" \
      -H "PddToken: $API_KEY" \
      -d "domain=$CERTBOT_DOMAIN&type=TXT&content=$CERTBOT_VALIDATION&ttl=300&subdomain=$CREATE_DOMAIN" \
-      | python -c "import sys,json;print(json.load(sys.stdin)['record']['record_id'])")
+      | python3 -c "import sys,json;print(json.load(sys.stdin)['record']['record_id'])")
 
 # Save info for cleanup
 if [ ! -d /tmp/CERTBOT_$CERTBOT_DOMAIN ];then
