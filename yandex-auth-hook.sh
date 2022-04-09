@@ -24,6 +24,7 @@ else
         echo $RECORD_ID >> /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
 fi
 
+unset DNS_GOOGLE DNS_CLOUDFLARE DNS_OPENDNS
 # Sleep to make sure the change has time to propagate over to DNS (max: 20 min)
 c_time=0
 end_time=1200
@@ -33,11 +34,25 @@ while [ "$c_time" -le "$end_time" ]; do
                 if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @dns2.yandex.net | grep $CERTBOT_VALIDATION` ]; then
                         sleep 5
                         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @8.8.8.8 | grep $CERTBOT_VALIDATION` ]; then
-                                sleep 5
-                                break
+                                DNS_GOOGLE=1
                         else
                                 sleep 50
                                 c_time=$[c_time+50]
+                        fi
+                        if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @1.1.1.1 | grep $CERTBOT_VALIDATION` ]; then
+                                DNS_CLOUDFLARE=1
+                        else
+                                sleep 50
+                                c_time=$[c_time+50]
+                        fi
+                        if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @208.67.222.222 | grep $CERTBOT_VALIDATION` ]; then
+                                DNS_OPENDNS=1
+                        else
+                                sleep 50
+                                c_time=$[c_time+50]
+                        fi
+                        if [ ${DNS_GOOGLE} -eq 1 ] && [ ${DNS_CLOUDFLARE} -eq 1 ] && [ ${DNS_OPENDNS} -eq 1 ]; then
+                                break
                         fi
                 else
                         sleep 55
