@@ -50,6 +50,5 @@ certbot renew \
     --manual \
     --manual-auth-hook ~/.certbot-dns-pddyandex/yandex-auth-hook.sh \
     --manual-cleanup-hook ~/.certbot-dns-pddyandex/yandex-cleanup-hook.sh \
-    --preferred-challenges dns-01 \
-    --server https://acme-v02.api.letsencrypt.org/directory
+    --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory
 ```
