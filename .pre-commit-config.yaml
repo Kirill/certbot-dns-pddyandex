@@ -24,7 +24,3 @@ repos:
   rev: v2.0.3
   hooks:
     - id: forbid-secrets
-- repo: https://github.com/petalmd/dockerfile-pre-commit
-  rev: 'v1.0'
-  hooks:
-    - id: dockerlint
