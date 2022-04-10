@@ -30,35 +30,44 @@ c_time=0
 end_time=86400
 while [ "$c_time" -le "$end_time" ]; do
         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @dns1.yandex.net | grep $CERTBOT_VALIDATION` ]; then
+                logger -t certbot-dns-pddyandex "Yandex: Primary - yes"
                 sleep 5
                 if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @dns2.yandex.net | grep $CERTBOT_VALIDATION` ]; then
+                        logger -t certbot-dns-pddyandex "Yandex: Secondary - yes"
                         sleep 5
                         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @8.8.8.8 | grep $CERTBOT_VALIDATION` ]; then
+                                logger -t certbot-dns-pddyandex "Propagation: Google - yes"
                                 DNS_GOOGLE=1
                         else
-                                sleep 50
-                                c_time=$[c_time+50]
+                                logger -t certbot-dns-pddyandex "Propagation: Google - no"
                         fi
                         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @1.1.1.1 | grep $CERTBOT_VALIDATION` ]; then
+                                logger -t certbot-dns-pddyandex "Propagation: Cloudflare - yes"
                                 DNS_CLOUDFLARE=1
                         else
-                                sleep 50
-                                c_time=$[c_time+50]
+                                logger -t certbot-dns-pddyandex "Propagation: Cloudflare - no"
                         fi
                         if [ `dig $CREATE_DOMAIN.$CERTBOT_DOMAIN TXT +short @208.67.222.222 | grep $CERTBOT_VALIDATION` ]; then
+                                logger -t certbot-dns-pddyandex "Propagation: OpenDNS - yes"
                                 DNS_OPENDNS=1
                         else
-                                sleep 50
-                                c_time=$[c_time+50]
+                                logger -t certbot-dns-pddyandex "Propagation: OpenDNS - no"
                         fi
                         if [ test -n "${DNS_GOOGLE}" ] && [ test -n "${DNS_CLOUDFLARE}" ] && [ test -n "${DNS_OPENDNS}" ]; then
+                                logger -t certbot-dns-pddyandex "Propagation: Completed"
                                 break
+                        else
+                                logger -t certbot-dns-pddyandex "Propagation: In progress"
+                                sleep 55
+                                c_time=$[c_time+55]
                         fi
                 else
+                        logger -t certbot-dns-pddyandex "Yandex: Secondary - no"
                         sleep 55
                         c_time=$[c_time+55]
                 fi
         else
+                logger -t certbot-dns-pddyandex "Yandex: Primary - no"
                 sleep 60
                 c_time=$[c_time+60]
         fi
