@@ -1,4 +1,5 @@
 #!/bin/bash
+
 _dir="$(dirname "$0")"
 source "${HOME}/.certbot-dns-pddyandex.rc"
 
@@ -16,7 +17,7 @@ if [ -n "${RECORD_ID}" ]; then
         RESULT=$(curl -s -X POST "https://pddimp.yandex.ru/api2/admin/dns/del" \
         -H "PddToken: $API_KEY" \
         -d "domain=$CERTBOT_DOMAIN&record_id=$RECORD_ID" \
-         | python -c "import sys,json;print(json.load(sys.stdin)['success'])")
+         | python3 -c "import sys,json;print(json.load(sys.stdin)['success'])")
         echo $RESULT
 fi
 }

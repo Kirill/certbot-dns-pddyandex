@@ -1,4 +1,5 @@
 #!/bin/bash
+
 _dir="$(dirname "$0")"
 source "${HOME}/.certbot-dns-pddyandex.rc"
 
