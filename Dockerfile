@@ -1,6 +1,5 @@
 FROM certbot/certbot:latest
 
-COPY entrypoint.sh /entrypoint.sh
 COPY *.sh /root/.certbot-dns-pddyandex/
 
 RUN set -ex && \
