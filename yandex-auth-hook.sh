@@ -53,14 +53,15 @@ while [ "$c_time" -le "$end_time" ]; do
                         else
                                 logger -t certbot-dns-pddyandex "Propagation: OpenDNS - no"
                         fi
-                        if [ test -n "${DNS_GOOGLE}" ] && [ test -n "${DNS_CLOUDFLARE}" ] && [ test -n "${DNS_OPENDNS}" ]; then
-                                logger -t certbot-dns-pddyandex "Propagation: Completed"
+                        if [ "${DNS_GOOGLE}" = '1' ] && [ "${DNS_CLOUDFLARE}" = '1' ] && [ "${DNS_OPENDNS}" = '1' ]; then
+                                logger -t certbot-dns-pddyandex "Completed"
                                 break
                         else
-                                logger -t certbot-dns-pddyandex "Propagation: In progress"
+                                logger -t certbot-dns-pddyandex "In progress"
                                 sleep 55
                                 c_time=$[c_time+55]
                         fi
+                        unset DNS_GOOGLE DNS_CLOUDFLARE DNS_OPENDNS
                 else
                         logger -t certbot-dns-pddyandex "Yandex: Secondary - no"
                         sleep 55
