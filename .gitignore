@@ -1,0 +1,13 @@
+**
+!/.github
+!/.certbot-dns-pddyandex.rc.example
+!/.dockrignore
+!/.gitignore
+!/.pre-commit-config.yaml
+!/.pre-commit-install
+!/Dockerfile
+!/entrypoint.sh
+!/LICENSE
+!/README.md
+!/yandex-hook-auth.sh
+!/yandex-hook-cleanup.sh
