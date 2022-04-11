@@ -23,7 +23,10 @@ success () {
 ( test -z "${MYSQL_PASS}" && ( test ! -f "/root/.certbot-dns-pddyandex.rc" || test ! -s "/root/.certbot-dns-pddyandex.rc" ) ) || ( echo "Setting [API_KEYMAP] environment variable is insecure, use passwordfile [/root/.certbot-dns-pddyandex.rc] instead"; echo "${API_KEYMAP}" > "/root/.certbot-dns-pddyandex.rc" )
 
 test -z "$(which curl)" && warn "No cURL detected, Yandex PDD DNS hooks will fail!" || success "cURL detected, Yandex PDD DNS hooks could work correctly."
+test ! -x "/root/.certbot-dns-pddyandex/yandex-hook-auth.sh" && warn "No auth hook detected, Yandex PDD DNS hooks will fail!" || success "Auth hook detected, Yandex PDD DNS hooks could work correctly."
+test ! -x "/root/.certbot-dns-pddyandex/yandex-hook-cleanup.sh" && warn "No cleanup hook detected, Yandex PDD DNS hooks will fail!" || success "Cleanup hook detected, Yandex PDD DNS hooks could work correctly."
 
-notify "Yandex PDD DNS hooks should be used with parameters: \n\t--manual-auth-hook /root/.certbot-dns-pddyandex/yandex-auth-hook.sh \n\t--manual-cleanup-hook /root/.certbot-dns-pddyandex/yandex-cleanup-hook.sh"
+
+notify "Yandex PDD DNS hooks should be used with parameters: \n\t--manual-auth-hook /root/.certbot-dns-pddyandex/yandex-hook-auth.sh \n\t--manual-cleanup-hook /root/.certbot-dns-pddyandex/yandex-hook-cleanup.sh"
 
 exec certbot $@
