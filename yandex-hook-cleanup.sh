@@ -1,7 +1,7 @@
 #!/bin/bash
 
 _dir="$(dirname "$0")"
-source "${HOME}/.certbot-dns-pddyandex.rc"
+source "${HOME}/.certbot-dns-pddyandex.rc" || exit 1
 
 # Get API key for current domain
 API_KEY=${API_KEYMAP["$CERTBOT_DOMAIN"]}
