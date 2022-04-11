@@ -1,3 +1,5 @@
 **
 !/Dockerfile
 !/entrypoint.sh
+!/yandex-hook-auth.sh
+!/yandex-hook-cleanup.sh
